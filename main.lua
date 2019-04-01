@@ -1,19 +1,14 @@
 --------------------------------------------------------------------------------
 -- main.lua
 
-local Balloon = require('scripts.sprite.spr_balloon')
-local Platform = require('scripts.sprite.spr_platform')
-local Background = require('scripts.image.img_background')
+local composer = require ('composer')
+local TerrGrass = require( 'scripts.sprite.spr_terr_grass' )
+local Background = require( 'scripts.image.img_background' )
 
-local physics = require('physics')
+display.setDefault( 'anchorX', 0 )
+display.setDefault( 'anchorY', 0 )
+
+physics = require( 'physics' )
 physics.start()
 
-local bkrgSky = Background:new(nil, 'images/background.png')
-
-tapCount = 0
-tapText = display.newText(tapCount, display.contentCenterX, 20, native.systemFont, 40)
-tapText:setFillColor(0, 0, 0)
-
-local sprPlatform = Platform:new(nil, physics)
-
-local sprBalloon = Balloon:new(nil, physics)
+composer.gotoScene( 'scripts.scene.scn_battlefield')

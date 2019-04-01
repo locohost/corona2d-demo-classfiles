@@ -8,16 +8,21 @@ local ImageBase = {
 }
 
 -- Base class method new
-function ImageBase:new(o, fileName)
+function ImageBase:new( o, fileName, x, y, w, h )
 	o = o or {}
-	setmetatable(o, self)
+	setmetatable( o, self )
 	self.__index = self
 	
-	self.fileName = fileName
+	if (fileName) then 
+		self.fileName = fileName
+		self.image = display.newImageRect( self.fileName, w, h )
+		self.image.x = x
+		self.image.y = y
+	end
 	return o
 end
 
-function ImageBase:move(x, y)
+function ImageBase:moveTo( x, y )
 	self.image.x = x
 	self.image.y = y
 end

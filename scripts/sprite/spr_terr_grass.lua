@@ -1,53 +1,20 @@
--- Terrain Sprites base
+--------------------------------------------------------------------------------
+-- scripts/sprite/spr_terr_grass.lua
 
-local TerrBase = {}
-local TerrBase_mt = {_index = TerrBase}
+local TerrBase = require( 'scripts.sprite.spr_terr_base' );
 
+local TerrGrass = TerrBase:new()
+TerrGrass.isBlocking = false
+TerrGrass.impedence = 0.0
 
--- function mymath.add(a,b)
---    print(a+b)
--- end
+-- Derived class method new
+function TerrGrass:new ( o, x, y )
+	o = o or TerrBase:new( o, 'images/MFW_Grid_Grass.png', x, y )
+	setmetatable( o, self )
+	self.__index = self
 
--- function mymath.sub(a,b)
---    print(a-b)
--- end
-
--- function mymath.mul(a,b)
---    print(a*b)
--- end
-
--- function mymath.div(a,b)
---    print(a/b)
--- end
-
---return TerrBase_mt
-
--- Terrain Sprites - Grass
-
---local TerrBase = require'spr_terr_base'
-
-local TerrGrass = {}
-
-function TerrGrass:new()
-	local grass = {}
-	setmetatable(grass,TerrBase)
-	return grass
+	return o
 end
 
-function TerrGrass:add(a,b)
-	print(a+b)
-end
-
-function TerrGrass:sub(a,b)
-	print(a-b)
-end
-
-function TerrGrass:mul(a,b)
-	print(a*b)
-end
-
-function TerrGrass:div(a,b)
-	print(a/b)
-end
 
 return TerrGrass

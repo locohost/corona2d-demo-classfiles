@@ -1,23 +1,28 @@
--- Terrain Sprites base
+--------------------------------------------------------------------------------
+-- scripts/sprite/spr_terr_base.lua
 
-local TerrBase = {}
-local TerrBase_mt = {_index = TerrBase}
+local SpriteBase = require( 'scripts.sprite.spr_base' );
 
+local TerrBase = SpriteBase:new()
+-- Class constructor
+function TerrBase:new ( o, sheet, x, y )
+	o = o or SpriteBase:new( o, sheet, x, y, 128, 128 )
+	setmetatable( o, self )
+	self.__index = self
 
--- function mymath.add(a,b)
---    print(a+b)
--- end
+	if (sheet) then
+		self.image.alpha = 0.5
+		physics.addBody( self.image, 'static' )
+	end
+	return o
+end
 
--- function mymath.sub(a,b)
---    print(a-b)
--- end
+function TerrBase:drawAt()
+end
 
--- function mymath.mul(a,b)
---    print(a*b)
--- end
+function TerrBase:draw()
+end
 
--- function mymath.div(a,b)
---    print(a/b)
--- end
+-- Base class method printArea
 
-return TerrBase_mt
+return TerrBase

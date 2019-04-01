@@ -1,0 +1,56 @@
+Include JSON library
+require "json"
+Create the functions
+Then create the functions which get the JSON string from the Internet.
+
+local jsonFile = function( filename, base )
+
+-- set default base dir if none specified
+if not base then base = system.ResourceDirectory; end
+
+-- create a file path for corona i/o
+local path = system.pathForFile( filename, base )
+
+-- will hold contents of file
+local contents
+
+-- io.open opens a file at path. returns nil if no file found
+local file = io.open( path, "r" )
+if file then
+-- read all contents of file into a string
+contents = file:read( "*a" )
+io.close( file ) -- close the file after using it
+end
+
+return contents
+end
+
+local function networkListener( event )
+if ( event.isError ) then
+print( "Network error!")
+else
+print ( "RESPONSE: " .. event.response )
+local t = json.decode( event.response )
+
+-- Go through the array in a loop
+for key in pairs(t) do
+-- Here you can do whatever you like with the values
+print(t[key]["returnvalue1"])
+print(t[key]["returnvalue2"])
+print(t[key]["returnvalue3"])
+end
+
+end
+end
+
+HTTP POST call
+With the following lines of code you can call the above created functions to get data from the Internet.
+
+postData = "parameter1=value1&parameter2=value2&parameter3=value3"
+
+local params = {}
+params.body = postData
+
+local json_file_by_post = jsonFile( network.request( "http://www.yourserver.com/your_json_file.php", "POST", networkListener, params ) )
+HTTP GET call
+local json_file_by_get = jsonFile( network.request( "http://www.yourserver.com/your_json_file.php?parameter1=value1&parameter2=value2&parameter3=value3", "GET", networkListener ) )
